@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>UBS - Login</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        display: flex;
+        height: 100vh;
+      }
+
+      .left-panel {
+        width: 45%;
+        background-color: #003087;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: white;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-icon {
+        background-color: #f26522;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 20px;
+      }
+
+      .logo h1 {
+        font-size: 22px;
+        color: white;
+      }
+
+      .logo p {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .features {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      .feature {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+      }
+
+      .feature-icon {
+        background-color: rgba(242, 101, 34, 0.2);
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+
+      .feature-text h3 {
+        color: white;
+        font-size: 15px;
+        margin-bottom: 4px;
+      }
+
+      .feature-text p {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 13px;
+      }
+
+      .footer {
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 12px;
+      }
+
+      .right-panel {
+        width: 55%;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+      }
+
+      .form-container {
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .form-container h2 {
+        font-size: 28px;
+        color: #003087;
+        margin-bottom: 5px;
+      }
+
+      .form-container p {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 25px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+      }
+
+      label {
+        font-size: 13px;
+        font-weight: bold;
+        color: #003087;
+        margin-bottom: 6px;
+      }
+
+      input {
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        width: 100%;
+        outline: none;
+      }
+
+      input:focus {
+        border-color: #003087;
+      }
+
+      .login-btn {
+        width: 100%;
+        padding: 14px;
+        background-color: #f26522;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-bottom: 15px;
+      }
+
+      .login-btn:hover {
+        background-color: #d4541a;
+      }
+
+      .register-link {
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .register-link a {
+        color: #f26522;
+        font-weight: bold;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Left Panel -->
+    <div class="left-panel">
+      <div class="logo">
+        <div class="logo-icon">🛒</div>
+        <div>
+          <h1>University Bazaar</h1>
+          <p>UTA Student Marketplace</p>
+        </div>
+      </div>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">🛒</div>
+          <div class="feature-text">
+            <h3>Buy & Sell Goods</h3>
+            <p>Buy, sell, lend or exchange items with fellow Mavericks</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">👥</div>
+          <div class="feature-text">
+            <h3>Join Clubs & Organizations</h3>
+            <p>Form and join chess, math, cultural clubs and more</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">💬</div>
+          <div class="feature-text">
+            <h3>Direct Messaging</h3>
+            <p>Send messages to a single member, subgroup, or all members</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">💳</div>
+          <div class="feature-text">
+            <h3>Secure Payments</h3>
+            <p>Safe credit card payments for all transactions</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        © 2026 University Bazaar System — University of Texas at Arlington
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="right-panel">
+      <div class="form-container">
+        <h2>Welcome back</h2>
+        <p>Sign in to your UTA marketplace account</p>
+
+        <form>
+          <div class="form-group">
+            <label>University ID</label>
+            <input type="text" placeholder="1001234567" />
+          </div>
+
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" placeholder="Enter your password" />
+          </div>
+
+          <button type="submit" class="login-btn">Sign In</button>
+
+          <div class="register-link">
+            Don't have an account? <a href="register.html">Register here</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        var universityId = document.querySelectorAll("input")[0].value;
+        var password = document.querySelectorAll("input")[1].value;
+
+        if (universityId === "" || password === "") {
+          alert("Please fill in all fields!");
+          return;
+        }
+
+        var savedUser = localStorage.getItem("ubs_user_" + universityId);
+
+        if (savedUser === null) {
+          alert("University ID not found. Please register first!");
+          return;
+        }
+
+        var user = JSON.parse(savedUser);
+
+        if (user.password !== password) {
+          alert("Incorrect password. Please try again!");
+          return;
+        }
+
+        alert("Login successful! Welcome back " + user.firstName + "!");
+        window.location.href = "register.html";
+      });
+    </script>
+  </body>
+</html>
