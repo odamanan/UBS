@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UBS - Payments</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      :root {
+        --navy: #003087;
+        --orange: #f26522;
+        --orange-dark: #d4541a;
+        --white: #ffffff;
+        --soft-white: #f7f9fc;
+        --border: #d9e1ef;
+        --text: #1f2937;
+        --muted: #666666;
+        --shadow: 0 10px 30px rgba(0, 48, 135, 0.08);
+        --radius: 12px;
+        --success: #0f9d58;
+        --error: #c62828;
+      }
+
+      body {
+        background-color: var(--soft-white);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .topbar {
+        background-color: var(--navy);
+        color: white;
+        padding: 18px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        box-shadow: var(--shadow);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-icon {
+        background-color: var(--orange);
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .logo h1 {
+        font-size: 22px;
+        color: white;
+      }
+      .logo p {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .welcome-msg {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .welcome-msg span {
+        font-weight: bold;
+        color: var(--orange);
+      }
+
+      .menu {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .menu a {
+        background: rgba(255, 255, 255, 0.12);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 10px 16px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: 0.2s ease;
+      }
+
+      .menu a:hover,
+      .menu a.active {
+        background-color: var(--orange);
+        border-color: var(--orange);
+      }
+
+      .logout-btn {
+        padding: 10px 18px;
+        border-radius: 999px;
+        background-color: var(--orange);
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .logout-btn:hover {
+        background-color: var(--orange-dark);
+      }
+
+      .page-shell {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 40px 40px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .hero-main,
+      .hero-side,
+      .section-card,
+      .summary-card,
+      .step-card {
+        background-color: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+      }
+
+      .hero-main,
+      .hero-side,
+      .section-card {
+        padding: 28px;
+      }
+
+      .hero-tag,
+      .badge {
+        display: inline-block;
+        background-color: rgba(242, 101, 34, 0.12);
+        color: var(--orange);
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 14px;
+      }
+
+      .hero-main h2,
+      .section-header h3 {
+        color: var(--navy);
+        margin-bottom: 10px;
+      }
+      .hero-main h2 {
+        font-size: 34px;
+      }
+
+      .hero-main p,
+      .hero-side p,
+      .section-header p,
+      .summary-card p,
+      .step-card p,
+      .form-group label,
+      .helper,
+      .validation-message {
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      }
+
+      .btn {
+        padding: 12px 18px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        transition: 0.2s ease;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background-color: var(--orange);
+        color: white;
+      }
+      .btn-primary:hover {
+        background-color: var(--orange-dark);
+      }
+      .btn-secondary {
+        background-color: white;
+        color: var(--navy);
+        border: 1px solid var(--border);
+      }
+      .btn-secondary:hover {
+        border-color: var(--navy);
+      }
+
+      .hero-side {
+        background-color: var(--navy);
+        color: white;
+      }
+      .hero-side p {
+        color: white;
+      }
+      .hero-side ul {
+        margin-top: 10px;
+        padding-left: 18px;
+      }
+
+      .hero-side li {
+        color: white;
+        background: rgba(255, 255, 255, 0.1);
+        margin-bottom: 10px;
+        border-radius: 8px;
+        padding: 12px 14px;
+        list-style-position: inside;
+        border-left: 3px solid var(--orange);
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .section-card {
+        margin-bottom: 24px;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+
+      .summary-card,
+      .step-card {
+        padding: 18px;
+        margin-bottom: 14px;
+      }
+      .summary-card h4,
+      .step-card h4 {
+        color: var(--navy);
+        margin-bottom: 8px;
+        font-size: 18px;
+      }
+
+      .amount {
+        font-size: 28px;
+        color: var(--navy);
+        font-weight: bold;
+        margin-top: 8px;
+      }
+
+      form {
+        display: grid;
+        gap: 16px;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .form-group {
+        display: grid;
+        gap: 8px;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        background: white;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--navy);
+      }
+
+      .validation-message {
+        min-height: 20px;
+      }
+      .success-message {
+        color: var(--success);
+        font-weight: bold;
+      }
+      .error-message {
+        color: var(--error);
+        font-weight: bold;
+      }
+
+      .card-preview {
+        background: linear-gradient(135deg, #003087 0%, #1d4fb5 100%);
+        color: white;
+        padding: 22px;
+        border-radius: 14px;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: var(--shadow);
+        margin-top: 10px;
+      }
+
+      .card-preview .label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        opacity: 0.8;
+      }
+
+      .card-number {
+        font-size: 24px;
+        letter-spacing: 2px;
+        font-weight: bold;
+        margin: 18px 0;
+        word-break: break-word;
+      }
+
+      .card-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 13px;
+      }
+
+      footer {
+        text-align: center;
+        color: #777;
+        font-size: 12px;
+        padding-top: 8px;
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .page-shell,
+        .topbar {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        .hero-main h2 {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="logo">
+        <div class="logo-icon">💳</div>
+        <div>
+          <h1>University Bazaar</h1>
+          <p>UTA Student Marketplace</p>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="welcome-msg">
+          Welcome, <span id="userName">Student</span>!
+        </div>
+        <nav class="menu">
+          <a href="home.html">Home</a>
+          <a href="sales.html">Sales</a>
+          <a href="payments.html" class="active">Payments</a>
+          <a href="clubs.html">Clubs</a>
+          <a href="communication.html">Communication</a>
+        </nav>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="page-shell">
+      <section class="hero">
+        <div class="hero-main">
+          <span class="hero-tag">Sprint 2 · Story 2</span>
+          <h2>Payments</h2>
+          <p>
+            UBS supports member-to-member payments for transactions made through
+            the marketplace. Payment is accepted by credit card only, and the
+            system verifies that the card number entered is exactly 16 digits
+            before processing.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#payment-form"
+              >Go to Payment Form</a
+            >
+            <a class="btn btn-secondary" href="sales.html">Back to Sales</a>
+          </div>
+        </div>
+
+        <aside class="hero-side">
+          <span
+            class="badge"
+            style="background-color: rgba(255, 255, 255, 0.15); color: white"
+            >Payment rules</span
+          >
+          <p>This page matches the payment story from your backlog.</p>
+          <ul>
+            <li>Credit card payments only</li>
+            <li>Card number must be 16 digits long</li>
+            <li>No advanced card validation required</li>
+            <li>Transaction completes after valid entry</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="two-col">
+        <section class="section-card">
+          <div class="section-header">
+            <div>
+              <h3>Order Summary</h3>
+              <p>Example purchase details passed from the sales page.</p>
+            </div>
+            <span class="badge">Checkout</span>
+          </div>
+
+          <div class="summary-card">
+            <h4>Selected Item</h4>
+            <p id="itemName">Calculus Textbook</p>
+            <div class="amount" id="itemPrice">$35.00</div>
+          </div>
+
+          <div class="summary-card">
+            <h4>Purchase Details</h4>
+            <p>Seller: M. Torres</p>
+            <p>Condition: Good</p>
+            <p>Pickup: On campus</p>
+          </div>
+
+          <div class="summary-card">
+            <h4>What happens next</h4>
+            <p>
+              After a valid 16-digit card number is entered, the transaction is
+              processed and a confirmation message is shown to the buyer.
+            </p>
+          </div>
+        </section>
+
+        <section class="section-card" id="payment-form">
+          <div class="section-header">
+            <div>
+              <h3>Payment Form</h3>
+              <p>Complete the purchase using a credit card.</p>
+            </div>
+            <span class="badge">Credit Card Only</span>
+          </div>
+
+          <form id="paymentForm">
+            <div class="form-group">
+              <label for="cardName">Name on Card</label>
+              <input
+                type="text"
+                id="cardName"
+                placeholder="Enter cardholder name"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="cardNumber">Card Number</label>
+              <input
+                type="text"
+                id="cardNumber"
+                placeholder="Enter 16-digit card number"
+                maxlength="19"
+                required
+              />
+              <p class="helper">Only the length is checked for this project.</p>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="expDate">Expiration Date</label>
+                <input type="text" id="expDate" placeholder="MM/YY" required />
+              </div>
+              <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input
+                  type="text"
+                  id="cvv"
+                  placeholder="123"
+                  maxlength="4"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="billingEmail">Billing Email</label>
+              <input
+                type="email"
+                id="billingEmail"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <div id="validationMessage" class="validation-message"></div>
+
+            <button type="submit" class="btn btn-primary">
+              Process Payment
+            </button>
+          </form>
+
+          <div class="card-preview">
+            <div>
+              <div class="label">UBS Credit Payment</div>
+              <div class="card-number" id="previewCardNumber">
+                #### #### #### ####
+              </div>
+            </div>
+            <div class="card-meta">
+              <div>
+                <div class="label">Cardholder</div>
+                <div id="previewName">Your Name</div>
+              </div>
+              <div>
+                <div class="label">Expires</div>
+                <div id="previewExpiry">MM/YY</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="section-card">
+        <div class="section-header">
+          <div>
+            <h3>How the Payment Story Works</h3>
+            <p>This flow matches the requirements in Sprint 2, Story 2.</p>
+          </div>
+          <span class="badge">Story Flow</span>
+        </div>
+
+        <div class="two-col">
+          <div>
+            <div class="step-card">
+              <h4>1. Buyer selects an item</h4>
+              <p>
+                The user chooses an item from the Sales page and proceeds to
+                checkout.
+              </p>
+            </div>
+            <div class="step-card">
+              <h4>2. Buyer enters credit card</h4>
+              <p>
+                The system accepts payment by credit card only for this story.
+              </p>
+            </div>
+          </div>
+          <div>
+            <div class="step-card">
+              <h4>3. System checks card length</h4>
+              <p>
+                The application confirms that the card number contains exactly
+                16 digits.
+              </p>
+            </div>
+            <div class="step-card">
+              <h4>4. Payment is processed</h4>
+              <p>
+                If the card number is valid, the transaction is completed and a
+                success message appears.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        © 2026 University Bazaar System — University of Texas at Arlington
+      </footer>
+    </div>
+
+    <script>
+      // Check if user is logged in
+      var currentUser = JSON.parse(localStorage.getItem("ubs_current_user"));
+      if (!currentUser) {
+        window.location.href = "login.html";
+      } else {
+        document.getElementById("userName").textContent = currentUser.firstName;
+      }
+
+      // Logout
+      function logout() {
+        localStorage.removeItem("ubs_current_user");
+        window.location.href = "login.html";
+      }
+
+      // Card preview
+      const cardNumberInput = document.getElementById("cardNumber");
+      const cardNameInput = document.getElementById("cardName");
+      const expDateInput = document.getElementById("expDate");
+      const previewCardNumber = document.getElementById("previewCardNumber");
+      const previewName = document.getElementById("previewName");
+      const previewExpiry = document.getElementById("previewExpiry");
+      const paymentForm = document.getElementById("paymentForm");
+      const validationMessage = document.getElementById("validationMessage");
+
+      function formatCardNumber(value) {
+        const digits = value.replace(/\D/g, "").slice(0, 16);
+        return digits.replace(/(.{4})/g, "$1 ").trim();
+      }
+
+      cardNumberInput.addEventListener("input", function () {
+        this.value = formatCardNumber(this.value);
+        previewCardNumber.textContent = this.value || "#### #### #### ####";
+      });
+
+      cardNameInput.addEventListener("input", function () {
+        previewName.textContent = this.value || "Your Name";
+      });
+
+      expDateInput.addEventListener("input", function () {
+        previewExpiry.textContent = this.value || "MM/YY";
+      });
+
+      paymentForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const rawCardNumber = cardNumberInput.value.replace(/\D/g, "");
+
+        if (rawCardNumber.length !== 16) {
+          validationMessage.textContent =
+            "Card number must be exactly 16 digits.";
+          validationMessage.className = "validation-message error-message";
+          return;
+        }
+
+        validationMessage.textContent = "Payment processed successfully.";
+        validationMessage.className = "validation-message success-message";
+
+        setTimeout(() => {
+          alert("Payment successful. Your transaction has been completed.");
+        }, 200);
+
+        paymentForm.reset();
+        previewCardNumber.textContent = "#### #### #### ####";
+        previewName.textContent = "Your Name";
+        previewExpiry.textContent = "MM/YY";
+      });
+    </script>
+  </body>
+</html>

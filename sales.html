@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UBS - Sales</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      :root {
+        --navy: #003087;
+        --orange: #f26522;
+        --orange-dark: #d4541a;
+        --white: #ffffff;
+        --soft-white: #f7f9fc;
+        --border: #d9e1ef;
+        --text: #1f2937;
+        --muted: #666666;
+        --shadow: 0 10px 30px rgba(0, 48, 135, 0.08);
+        --radius: 12px;
+        --success: #0f9d58;
+      }
+
+      body {
+        background-color: var(--soft-white);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .topbar {
+        background-color: var(--navy);
+        color: white;
+        padding: 18px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        box-shadow: var(--shadow);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-icon {
+        background-color: var(--orange);
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .logo h1 {
+        font-size: 22px;
+        color: white;
+      }
+      .logo p {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .welcome-msg {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .welcome-msg span {
+        font-weight: bold;
+        color: var(--orange);
+      }
+
+      .menu {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .menu a,
+      .menu button {
+        background: rgba(255, 255, 255, 0.12);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 10px 16px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: 0.2s ease;
+      }
+
+      .menu a:hover,
+      .menu button:hover,
+      .menu button.active {
+        background-color: var(--orange);
+        border-color: var(--orange);
+      }
+
+      .logout-btn {
+        padding: 10px 18px;
+        border-radius: 999px;
+        background-color: var(--orange);
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .logout-btn:hover {
+        background-color: var(--orange-dark);
+        transform: translateY(-1px);
+      }
+
+      .page-shell {
+        max-width: 1250px;
+        margin: 0 auto;
+        padding: 30px 40px 40px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .hero-main,
+      .hero-side,
+      .section-card,
+      .listing-card,
+      .modal-content {
+        background-color: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+      }
+
+      .hero-main,
+      .hero-side,
+      .section-card {
+        padding: 28px;
+      }
+
+      .hero-tag,
+      .badge {
+        display: inline-block;
+        background-color: rgba(242, 101, 34, 0.12);
+        color: var(--orange);
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 14px;
+      }
+
+      .hero-main h2,
+      .section-header h3 {
+        color: var(--navy);
+        margin-bottom: 10px;
+      }
+      .hero-main h2 {
+        font-size: 34px;
+      }
+
+      .hero-main p,
+      .hero-side p,
+      .section-header p,
+      .listing-card p,
+      .form-group label,
+      .hint {
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      }
+
+      .btn {
+        padding: 12px 18px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        transition: 0.2s ease;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background-color: var(--orange);
+        color: white;
+      }
+      .btn-primary:hover {
+        background-color: var(--orange-dark);
+      }
+      .btn-secondary {
+        background-color: white;
+        color: var(--navy);
+        border: 1px solid var(--border);
+      }
+      .btn-secondary:hover {
+        border-color: var(--navy);
+      }
+
+      .hero-side ul {
+        margin-top: 10px;
+        padding-left: 18px;
+      }
+
+      .hero-side li {
+        color: white;
+        background: rgba(0, 48, 135, 0.95);
+        margin-bottom: 10px;
+        border-radius: 8px;
+        padding: 12px 14px;
+        list-style-position: inside;
+        border-left: 3px solid var(--orange);
+      }
+
+      .filters {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 18px;
+      }
+
+      .filter-btn {
+        background: #eef3fb;
+        color: var(--navy);
+        border: 1px solid var(--border);
+        padding: 10px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .filter-btn.active,
+      .filter-btn:hover {
+        background-color: var(--orange);
+        color: white;
+        border-color: var(--orange);
+      }
+
+      .section-card {
+        margin-bottom: 24px;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+
+      .listing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .listing-card {
+        padding: 20px;
+        transition: 0.2s ease;
+      }
+      .listing-card.hidden {
+        display: none;
+      }
+      .listing-card:hover {
+        transform: translateY(-2px);
+      }
+
+      .listing-card small {
+        display: inline-block;
+        font-size: 12px;
+        color: var(--orange);
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .listing-card h4 {
+        color: var(--navy);
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+
+      .meta-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin: 14px 0;
+      }
+
+      .price {
+        font-size: 18px;
+        font-weight: bold;
+        color: var(--navy);
+      }
+
+      .category-pill,
+      .condition-pill {
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .category-pill {
+        background-color: #eef3fb;
+        color: var(--navy);
+      }
+      .condition-pill {
+        background-color: #edf8f2;
+        color: var(--success);
+      }
+
+      .card-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+      }
+
+      .mini-btn {
+        padding: 10px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        border: 1px solid var(--border);
+        background: white;
+        color: var(--navy);
+      }
+
+      .mini-btn.primary {
+        background: var(--orange);
+        border-color: var(--orange);
+        color: white;
+      }
+      .mini-btn.primary:hover {
+        background: var(--orange-dark);
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 24px;
+      }
+
+      form {
+        display: grid;
+        gap: 16px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .form-group {
+        display: grid;
+        gap: 8px;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 110px;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--navy);
+      }
+
+      .notice {
+        margin-top: 12px;
+        padding: 12px 14px;
+        border-radius: 8px;
+        background: #edf8f2;
+        color: var(--success);
+        font-size: 14px;
+        font-weight: bold;
+        display: none;
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        z-index: 999;
+      }
+
+      .modal.show {
+        display: flex;
+      }
+
+      .modal-content {
+        width: 100%;
+        max-width: 480px;
+        padding: 24px;
+      }
+      .modal-content h3 {
+        color: var(--navy);
+        margin-bottom: 8px;
+      }
+      .modal-content p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 16px;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 18px;
+        flex-wrap: wrap;
+      }
+
+      footer {
+        text-align: center;
+        color: #777;
+        font-size: 12px;
+        padding-top: 8px;
+      }
+
+      @media (max-width: 1050px) {
+        .listing-grid,
+        .two-col,
+        .hero {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 780px) {
+        .page-shell,
+        .topbar {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .listing-grid,
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        .hero-main h2 {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="logo">
+        <div class="logo-icon">🛒</div>
+        <div>
+          <h1>University Bazaar</h1>
+          <p>UTA Student Marketplace</p>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="welcome-msg">
+          Welcome, <span id="userName">Student</span>!
+        </div>
+        <nav class="menu">
+          <a href="home.html">Home</a>
+          <a href="sales.html">Sales</a>
+          <a href="#create-listing">Post Listing</a>
+          <button class="filter-btn active" data-filter="all">All Items</button>
+          <button class="filter-btn" data-filter="books">Books</button>
+          <button class="filter-btn" data-filter="household">Household</button>
+          <button class="filter-btn" data-filter="electronics">
+            Electronics
+          </button>
+        </nav>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="page-shell">
+      <section class="hero">
+        <div class="hero-main">
+          <span class="hero-tag">Sprint 2 · Story 1</span>
+          <h2>Sales Marketplace</h2>
+          <p>
+            Registered UBS members can buy, sell, lend, or exchange merchandise
+            with other members. Post an item with a title, description, price,
+            and condition, then let other students browse listings and start a
+            transaction.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#create-listing">Create Listing</a>
+            <a class="btn btn-secondary" href="#browse-listings"
+              >Browse Listings</a
+            >
+          </div>
+          <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="books">Books</button>
+            <button class="filter-btn" data-filter="household">
+              Household
+            </button>
+            <button class="filter-btn" data-filter="electronics">
+              Electronics
+            </button>
+            <button class="filter-btn" data-filter="lend">Lend</button>
+            <button class="filter-btn" data-filter="exchange">Exchange</button>
+          </div>
+        </div>
+
+        <aside
+          class="hero-side"
+          style="background-color: var(--navy); color: white"
+        >
+          <span
+            class="badge"
+            style="background-color: rgba(255, 255, 255, 0.15); color: white"
+            >What this page includes</span
+          >
+          <p style="color: white">
+            This page covers the full Sales story from your backlog and includes
+            the actions a user would expect in the marketplace flow.
+          </p>
+          <ul>
+            <li>
+              Create a listing with title, description, price, and condition
+            </li>
+            <li>Browse available merchandise posted by members</li>
+            <li>Buy, lend, or exchange eligible items</li>
+            <li>Initiate a transaction directly from a listing</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="section-card" id="browse-listings">
+        <div class="section-header">
+          <div>
+            <h3>Available Listings</h3>
+            <p>
+              Example merchandise students can browse and transact on through
+              UBS.
+            </p>
+          </div>
+          <span class="badge">Member Listings</span>
+        </div>
+
+        <div class="listing-grid" id="listingGrid">
+          <article class="listing-card" data-category="books">
+            <small>For Sale</small>
+            <h4>Calculus Textbook</h4>
+            <p>
+              Clean used copy with a few highlighted pages. Great for first-year
+              engineering students.
+            </p>
+            <div class="meta-row">
+              <span class="price">$35</span>
+              <span class="condition-pill">Good</span>
+            </div>
+            <div class="meta-row">
+              <span class="category-pill">Books</span>
+              <span class="hint">Seller: M. Torres</span>
+            </div>
+            <div class="card-actions">
+              <button
+                class="mini-btn primary"
+                onclick="openTransaction('Calculus Textbook', '$35', 'Buy')"
+              >
+                Buy Item
+              </button>
+              <button
+                class="mini-btn"
+                onclick="alert('Viewing details for Calculus Textbook')"
+              >
+                View Details
+              </button>
+            </div>
+          </article>
+
+          <article class="listing-card" data-category="household exchange">
+            <small>Exchange</small>
+            <h4>Dorm Mini Fridge</h4>
+            <p>
+              Working mini fridge available for exchange. Looking for a
+              microwave in similar condition.
+            </p>
+            <div class="meta-row">
+              <span class="price">Trade</span>
+              <span class="condition-pill">Very Good</span>
+            </div>
+            <div class="meta-row">
+              <span class="category-pill">Household</span>
+              <span class="hint">Seller: A. Lee</span>
+            </div>
+            <div class="card-actions">
+              <button
+                class="mini-btn primary"
+                onclick="
+                  openTransaction('Dorm Mini Fridge', 'Trade', 'Exchange')
+                "
+              >
+                Request Exchange
+              </button>
+              <button
+                class="mini-btn"
+                onclick="alert('Viewing details for Dorm Mini Fridge')"
+              >
+                View Details
+              </button>
+            </div>
+          </article>
+
+          <article class="listing-card" data-category="electronics lend">
+            <small>Lend</small>
+            <h4>Scientific Calculator</h4>
+            <p>
+              Available to lend for exam week. Small deposit required and pickup
+              on campus only.
+            </p>
+            <div class="meta-row">
+              <span class="price">$10 Deposit</span>
+              <span class="condition-pill">Excellent</span>
+            </div>
+            <div class="meta-row">
+              <span class="category-pill">Electronics</span>
+              <span class="hint">Seller: R. Patel</span>
+            </div>
+            <div class="card-actions">
+              <button
+                class="mini-btn primary"
+                onclick="
+                  openTransaction(
+                    'Scientific Calculator',
+                    '$10 Deposit',
+                    'Lend',
+                  )
+                "
+              >
+                Request to Borrow
+              </button>
+              <button
+                class="mini-btn"
+                onclick="alert('Viewing details for Scientific Calculator')"
+              >
+                View Details
+              </button>
+            </div>
+          </article>
+
+          <article class="listing-card" data-category="electronics">
+            <small>For Sale</small>
+            <h4>Wireless Headphones</h4>
+            <p>
+              Bluetooth headphones with charger included. Good sound and
+              comfortable fit.
+            </p>
+            <div class="meta-row">
+              <span class="price">$45</span>
+              <span class="condition-pill">Good</span>
+            </div>
+            <div class="meta-row">
+              <span class="category-pill">Electronics</span>
+              <span class="hint">Seller: J. Smith</span>
+            </div>
+            <div class="card-actions">
+              <button
+                class="mini-btn primary"
+                onclick="openTransaction('Wireless Headphones', '$45', 'Buy')"
+              >
+                Buy Item
+              </button>
+              <button
+                class="mini-btn"
+                onclick="alert('Viewing details for Wireless Headphones')"
+              >
+                View Details
+              </button>
+            </div>
+          </article>
+
+          <article class="listing-card" data-category="books">
+            <small>For Sale</small>
+            <h4>Biology Lab Manual</h4>
+            <p>
+              Current edition in clean condition and ready for next semester's
+              lab section.
+            </p>
+            <div class="meta-row">
+              <span class="price">$18</span>
+              <span class="condition-pill">Like New</span>
+            </div>
+            <div class="meta-row">
+              <span class="category-pill">Books</span>
+              <span class="hint">Seller: S. Chen</span>
+            </div>
+            <div class="card-actions">
+              <button
+                class="mini-btn primary"
+                onclick="openTransaction('Biology Lab Manual', '$18', 'Buy')"
+              >
+                Buy Item
+              </button>
+              <button
+                class="mini-btn"
+                onclick="alert('Viewing details for Biology Lab Manual')"
+              >
+                View Details
+              </button>
+            </div>
+          </article>
+
+          <article class="listing-card" data-category="household">
+            <small>For Sale</small>
+            <h4>Desk Lamp</h4>
+            <p>
+              LED desk lamp with adjustable brightness and flexible neck for
+              study spaces.
+            </p>
+            <div class="meta-row">
+              <span class="price">$20</span>
+              <span class="condition-pill">Very Good</span>
+            </div>
+            <div class="meta-row">
+              <span class="category-pill">Household</span>
+              <span class="hint">Seller: K. Davis</span>
+            </div>
+            <div class="card-actions">
+              <button
+                class="mini-btn primary"
+                onclick="openTransaction('Desk Lamp', '$20', 'Buy')"
+              >
+                Buy Item
+              </button>
+              <button
+                class="mini-btn"
+                onclick="alert('Viewing details for Desk Lamp')"
+              >
+                View Details
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="two-col">
+        <section class="section-card" id="create-listing">
+          <div class="section-header">
+            <div>
+              <h3>Create a Listing</h3>
+              <p>
+                Members can post an item with the required sales-story fields.
+              </p>
+            </div>
+            <span class="badge">Post Item</span>
+          </div>
+
+          <form id="listingForm">
+            <div class="form-group">
+              <label for="title">Item Title</label>
+              <input
+                type="text"
+                id="title"
+                placeholder="Enter item title"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea
+                id="description"
+                placeholder="Describe the item and any important details"
+                required
+              ></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="price">Price</label>
+                <input
+                  type="text"
+                  id="price"
+                  placeholder="e.g. $25 or Trade"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="condition">Condition</label>
+                <select id="condition" required>
+                  <option value="">Select condition</option>
+                  <option>Like New</option>
+                  <option>Excellent</option>
+                  <option>Very Good</option>
+                  <option>Good</option>
+                  <option>Fair</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" required>
+                  <option value="">Select category</option>
+                  <option value="books">Books</option>
+                  <option value="electronics">Electronics</option>
+                  <option value="household">Household</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="listingType">Listing Type</label>
+                <select id="listingType" required>
+                  <option value="">Select type</option>
+                  <option value="sale">Buy / Sell</option>
+                  <option value="lend">Lend</option>
+                  <option value="exchange">Exchange</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Post Listing</button>
+          </form>
+          <div class="notice" id="listingNotice">
+            Listing posted successfully.
+          </div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-header">
+            <div>
+              <h3>How Sales Works</h3>
+              <p>
+                This page reflects the Sprint 2 sales flow described in your
+                backlog.
+              </p>
+            </div>
+            <span class="badge">Story Flow</span>
+          </div>
+          <div style="display: grid; gap: 16px">
+            <div class="listing-card" style="padding: 16px">
+              <h4 style="margin-bottom: 8px; color: var(--navy)">
+                1. Member Posts Listing
+              </h4>
+              <p>
+                A registered member adds a title, description, price, and
+                condition for an item they want to sell, lend, or exchange.
+              </p>
+            </div>
+            <div class="listing-card" style="padding: 16px">
+              <h4 style="margin-bottom: 8px; color: var(--navy)">
+                2. Other Members Browse Listings
+              </h4>
+              <p>
+                Students can look through posted items by category and see
+                whether an item is for sale, lending, or exchange.
+              </p>
+            </div>
+            <div class="listing-card" style="padding: 16px">
+              <h4 style="margin-bottom: 8px; color: var(--navy)">
+                3. User Initiates Transaction
+              </h4>
+              <p>
+                When a member finds an item they want, they can begin a
+                transaction directly from the listing card.
+              </p>
+            </div>
+            <div class="listing-card" style="padding: 16px">
+              <h4 style="margin-bottom: 8px; color: var(--navy)">
+                4. Payment Story Connects Next
+              </h4>
+              <p>
+                For purchases, this sales page can hand off to your Sprint 2
+                payments page once you build that next story.
+              </p>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <footer>
+        © 2026 University Bazaar System — University of Texas at Arlington
+      </footer>
+    </div>
+
+    <div class="modal" id="transactionModal">
+      <div class="modal-content">
+        <h3>Initiate Transaction</h3>
+        <p id="transactionText">You are about to start a transaction.</p>
+        <div class="form-group">
+          <label for="buyerName">Your Name</label>
+          <input type="text" id="buyerName" placeholder="Enter your name" />
+        </div>
+        <div class="form-group" style="margin-top: 14px">
+          <label for="buyerMessage">Message to Seller</label>
+          <textarea
+            id="buyerMessage"
+            placeholder="Hi, I'm interested in this item."
+          ></textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" onclick="closeTransaction()">
+            Cancel
+          </button>
+          <button class="btn btn-primary" onclick="submitTransaction()">
+            Send Request
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Check if user is logged in
+      var currentUser = JSON.parse(localStorage.getItem("ubs_current_user"));
+      if (!currentUser) {
+        window.location.href = "login.html";
+      } else {
+        document.getElementById("userName").textContent = currentUser.firstName;
+      }
+
+      // Logout
+      function logout() {
+        localStorage.removeItem("ubs_current_user");
+        window.location.href = "login.html";
+      }
+
+      // Filter buttons
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      const listingCards = document.querySelectorAll(
+        ".listing-card[data-category]",
+      );
+      const listingForm = document.getElementById("listingForm");
+      const listingNotice = document.getElementById("listingNotice");
+      const transactionModal = document.getElementById("transactionModal");
+      const transactionText = document.getElementById("transactionText");
+
+      function applyFilter(category) {
+        filterButtons.forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.filter === category);
+        });
+        listingCards.forEach((card) => {
+          const cardCategories = card.dataset.category.split(" ");
+          const show = category === "all" || cardCategories.includes(category);
+          card.classList.toggle("hidden", !show);
+        });
+      }
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () =>
+          applyFilter(button.dataset.filter),
+        );
+      });
+
+      listingForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        listingNotice.style.display = "block";
+        listingNotice.textContent = "Listing posted successfully.";
+        listingForm.reset();
+        setTimeout(() => {
+          listingNotice.style.display = "none";
+        }, 3000);
+      });
+
+      function openTransaction(itemName, price, actionType) {
+        transactionText.textContent = `${actionType} request for ${itemName} (${price}). Enter your information below to contact the seller.`;
+        transactionModal.classList.add("show");
+      }
+
+      function closeTransaction() {
+        transactionModal.classList.remove("show");
+        document.getElementById("buyerName").value = "";
+        document.getElementById("buyerMessage").value = "";
+      }
+
+      function submitTransaction() {
+        const buyerName = document.getElementById("buyerName").value.trim();
+        if (!buyerName) {
+          alert("Please enter your name before sending the request.");
+          return;
+        }
+        alert("Transaction request sent successfully.");
+        closeTransaction();
+      }
+
+      window.onclick = function (event) {
+        if (event.target === transactionModal) closeTransaction();
+      };
+    </script>
+  </body>
+</html>

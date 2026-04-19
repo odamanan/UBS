@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UBS - Home</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      :root {
+        --navy: #003087;
+        --orange: #f26522;
+        --orange-dark: #d4541a;
+        --white: #ffffff;
+        --soft-white: #f7f9fc;
+        --border: #d9e1ef;
+        --text: #1f2937;
+        --muted: #666666;
+        --shadow: 0 10px 30px rgba(0, 48, 135, 0.08);
+        --radius: 12px;
+      }
+
+      body {
+        background-color: var(--soft-white);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .topbar {
+        background-color: var(--navy);
+        color: white;
+        padding: 18px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        box-shadow: var(--shadow);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-icon {
+        background-color: var(--orange);
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .logo h1 {
+        font-size: 22px;
+        color: white;
+      }
+      .logo p {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .welcome-msg {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .welcome-msg span {
+        font-weight: bold;
+        color: var(--orange);
+      }
+
+      .menu {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .menu a,
+      .menu button {
+        background: rgba(255, 255, 255, 0.12);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 10px 16px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: 0.2s ease;
+        text-decoration: none;
+      }
+
+      .menu a:hover,
+      .menu button:hover,
+      .menu button.active {
+        background-color: var(--orange);
+        border-color: var(--orange);
+      }
+
+      .logout-btn {
+        padding: 10px 18px;
+        border-radius: 999px;
+        background-color: var(--orange);
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .logout-btn:hover {
+        background-color: var(--orange-dark);
+        transform: translateY(-1px);
+      }
+
+      .page-shell {
+        max-width: 1250px;
+        margin: 0 auto;
+        padding: 30px 40px 40px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.3fr 0.9fr;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .hero-main,
+      .quick-panel,
+      .section-card,
+      .feature-card,
+      .listing-card {
+        background-color: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+      }
+
+      .hero-main {
+        padding: 34px;
+      }
+
+      .hero-tag {
+        display: inline-block;
+        background-color: rgba(242, 101, 34, 0.12);
+        color: var(--orange);
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 16px;
+      }
+
+      .hero-main h2 {
+        font-size: 34px;
+        color: var(--navy);
+        margin-bottom: 12px;
+      }
+      .hero-main p {
+        color: var(--muted);
+        font-size: 15px;
+        margin-bottom: 22px;
+        line-height: 1.7;
+        max-width: 650px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 24px;
+      }
+
+      .btn {
+        padding: 13px 18px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        transition: 0.2s ease;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background-color: var(--orange);
+        color: white;
+      }
+      .btn-primary:hover {
+        background-color: var(--orange-dark);
+      }
+      .btn-secondary {
+        background-color: white;
+        color: var(--navy);
+        border: 1px solid var(--border);
+      }
+      .btn-secondary:hover {
+        border-color: var(--navy);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .stat-box {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 16px;
+        background-color: #fff;
+      }
+
+      .stat-box strong {
+        display: block;
+        color: var(--navy);
+        font-size: 22px;
+        margin-bottom: 4px;
+      }
+      .stat-box span {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .quick-panel {
+        background-color: var(--navy);
+        color: white;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .quick-panel h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      .quick-panel p {
+        color: white;
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 18px;
+      }
+
+      .quick-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+
+      .quick-list li a {
+        display: block;
+        padding: 14px;
+        background-color: rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        border-left: 3px solid var(--orange);
+        transition: 0.2s ease;
+      }
+
+      .quick-list li a:hover {
+        background-color: rgba(255, 255, 255, 0.22);
+      }
+
+      .section-card {
+        padding: 28px;
+        margin-bottom: 24px;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+
+      .section-header h3 {
+        font-size: 26px;
+        color: var(--navy);
+        margin-bottom: 4px;
+      }
+      .section-header p {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .badge {
+        background-color: rgba(242, 101, 34, 0.12);
+        color: var(--orange);
+        padding: 7px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .listing-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .listing-card {
+        padding: 20px;
+        transition: 0.2s ease;
+      }
+      .listing-card.hidden {
+        display: none;
+      }
+      .listing-card:hover {
+        transform: translateY(-2px);
+      }
+
+      .listing-card small {
+        display: inline-block;
+        font-size: 12px;
+        color: var(--orange);
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .listing-card h4 {
+        font-size: 18px;
+        color: var(--navy);
+        margin-bottom: 8px;
+      }
+      .listing-card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .price {
+        font-size: 18px;
+        font-weight: bold;
+        color: var(--navy);
+      }
+
+      .category-pill {
+        background-color: #eef3fb;
+        color: var(--navy);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .feature-card {
+        padding: 20px;
+      }
+      .feature-card h4 {
+        font-size: 17px;
+        color: var(--navy);
+        margin-bottom: 8px;
+      }
+      .feature-card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      footer {
+        text-align: center;
+        color: #777;
+        font-size: 12px;
+        padding-top: 8px;
+      }
+
+      @media (max-width: 980px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .feature-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 700px) {
+        .page-shell,
+        .topbar {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .stats,
+        .listing-grid,
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-main h2 {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="logo">
+        <div class="logo-icon">🛒</div>
+        <div>
+          <h1>University Bazaar</h1>
+          <p>UTA Student Marketplace</p>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="welcome-msg">
+          Welcome, <span id="userName">Student</span>!
+        </div>
+        <nav class="menu">
+          <a href="home.html">Home</a>
+          <a href="sales.html">Sales</a>
+          <a href="payments.html">Payments</a>
+          <a href="clubs.html">Clubs</a>
+          <a href="communication.html">Communication</a>
+          <button class="filter-btn active" data-filter="all">All Items</button>
+          <button class="filter-btn" data-filter="books">Books</button>
+          <button class="filter-btn" data-filter="electronics">
+            Electronics
+          </button>
+          <button class="filter-btn" data-filter="homegoods">Home Goods</button>
+          <button class="filter-btn" data-filter="clubs">Clubs</button>
+          <button class="filter-btn" data-filter="messages">Messages</button>
+        </nav>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="page-shell">
+      <section class="hero">
+        <div class="hero-main">
+          <span class="hero-tag">Student Marketplace Portal</span>
+          <h2>Welcome to the University Bazaar System</h2>
+          <p>
+            Buy, sell, lend, and exchange items with fellow Mavericks in one
+            place. UBS also gives students an easy way to join organizations,
+            connect with campus groups, and share announcements across the
+            community.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="sales.html">Browse Listings</a>
+            <a class="btn btn-secondary" href="clubs.html"
+              >Explore Campus Groups</a
+            >
+          </div>
+
+          <div class="stats">
+            <div class="stat-box">
+              <strong>120+</strong>
+              <span>Active campus listings</span>
+            </div>
+            <div class="stat-box">
+              <strong>18</strong>
+              <span>Student clubs available</span>
+            </div>
+            <div class="stat-box">
+              <strong>24/7</strong>
+              <span>Marketplace access</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="quick-panel">
+          <div>
+            <h3>Quick Access</h3>
+            <p>
+              Everything from buying and selling to club participation is
+              organized in one student-friendly dashboard.
+            </p>
+            <ul class="quick-list">
+              <li>
+                <a href="sales.html"
+                  >Post items for sale, exchange, or lending</a
+                >
+              </li>
+              <li><a href="sales.html">Browse textbook listings</a></li>
+              <li>
+                <a href="clubs.html"
+                  >Create or join campus clubs and organizations</a
+                >
+              </li>
+              <li>
+                <a href="communication.html"
+                  >Send updates to members and groups</a
+                >
+              </li>
+            </ul>
+          </div>
+          <a class="btn btn-secondary" href="communication.html"
+            >View Announcements</a
+          >
+        </aside>
+      </section>
+
+      <section class="section-card" id="sales">
+        <div class="section-header">
+          <div>
+            <h3>Featured Sales</h3>
+            <p>
+              Students can buy, sell, lend, and exchange items directly through
+              campus listings.
+            </p>
+          </div>
+          <span class="badge">Sprint 2</span>
+        </div>
+
+        <div class="listing-grid" id="listingGrid">
+          <article class="listing-card" data-category="books">
+            <small>Available Now</small>
+            <h4>Calculus Textbook</h4>
+            <p>
+              Used textbook in good condition with highlighted notes from the
+              previous semester.
+            </p>
+            <div class="price-row">
+              <span class="price">$35</span>
+              <span class="category-pill">Books</span>
+            </div>
+          </article>
+
+          <article class="listing-card" data-category="homegoods">
+            <small>Exchange Option</small>
+            <h4>Dorm Mini Fridge</h4>
+            <p>
+              Compact refrigerator in working condition, ideal for dorm rooms or
+              apartments.
+            </p>
+            <div class="price-row">
+              <span class="price">$70</span>
+              <span class="category-pill">Home Goods</span>
+            </div>
+          </article>
+
+          <article class="listing-card" data-category="electronics">
+            <small>Lend Item</small>
+            <h4>Scientific Calculator</h4>
+            <p>
+              TI calculator available for short-term lending during exam week.
+            </p>
+            <div class="price-row">
+              <span class="price">$10 deposit</span>
+              <span class="category-pill">Electronics</span>
+            </div>
+          </article>
+
+          <article class="listing-card" data-category="homegoods">
+            <small>Popular Listing</small>
+            <h4>Study Desk Lamp</h4>
+            <p>
+              Adjustable LED lamp with brightness settings and a USB charging
+              port.
+            </p>
+            <div class="price-row">
+              <span class="price">$20</span>
+              <span class="category-pill">Home Goods</span>
+            </div>
+          </article>
+
+          <article class="listing-card" data-category="books">
+            <small>Best Value</small>
+            <h4>Biology Lab Manual</h4>
+            <p>
+              Gently used lab manual with clean pages and no missing sections.
+            </p>
+            <div class="price-row">
+              <span class="price">$18</span>
+              <span class="category-pill">Books</span>
+            </div>
+          </article>
+
+          <article class="listing-card" data-category="electronics">
+            <small>Campus Favorite</small>
+            <h4>Wireless Headphones</h4>
+            <p>
+              Comfortable over-ear headphones great for study sessions and
+              online classes.
+            </p>
+            <div class="price-row">
+              <span class="price">$45</span>
+              <span class="category-pill">Electronics</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card" id="clubs">
+        <div class="section-header">
+          <div>
+            <h3>Community Features</h3>
+            <p>
+              Beyond sales, UBS helps members connect through clubs and campus
+              communication tools.
+            </p>
+          </div>
+          <span class="badge">Sprint 3</span>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h4>Club Creation</h4>
+            <p>
+              Members can create clubs with a name and description for shared
+              interests and campus activities.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h4>Join Organizations</h4>
+            <p>
+              Students can browse clubs and request to join communities that
+              match their interests.
+            </p>
+          </article>
+          <article class="feature-card" id="communication">
+            <h4>Direct Messaging</h4>
+            <p>
+              Send messages to one member, a selected group, or the full UBS
+              member community.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h4>Announcements</h4>
+            <p>
+              Share notices such as events, free food, tournaments, and campus
+              opportunities.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <footer>
+        © 2026 University Bazaar System — University of Texas at Arlington
+      </footer>
+    </div>
+
+    <script>
+      // Check if user is logged in
+      var currentUser = JSON.parse(localStorage.getItem("ubs_current_user"));
+      if (!currentUser) {
+        window.location.href = "login.html";
+      } else {
+        document.getElementById("userName").textContent = currentUser.firstName;
+      }
+
+      // Logout
+      function logout() {
+        localStorage.removeItem("ubs_current_user");
+        window.location.href = "login.html";
+      }
+
+      // Filter buttons
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      const listingCards = document.querySelectorAll(".listing-card");
+
+      function setFilter(category) {
+        filterButtons.forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.filter === category);
+        });
+
+        if (category === "clubs") {
+          document
+            .getElementById("clubs")
+            .scrollIntoView({ behavior: "smooth" });
+          listingCards.forEach((card) => card.classList.remove("hidden"));
+          return;
+        }
+
+        if (category === "messages") {
+          document
+            .getElementById("communication")
+            .scrollIntoView({ behavior: "smooth" });
+          listingCards.forEach((card) => card.classList.remove("hidden"));
+          return;
+        }
+
+        document.getElementById("sales").scrollIntoView({ behavior: "smooth" });
+        listingCards.forEach((card) => {
+          const matches =
+            category === "all" || card.dataset.category === category;
+          card.classList.toggle("hidden", !matches);
+        });
+      }
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () =>
+          setFilter(button.dataset.filter),
+        );
+      });
+    </script>
+  </body>
+</html>
