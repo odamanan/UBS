@@ -266,8 +266,8 @@
           return;
         }
 
-        alert("Login successful! Welcome back " + user.firstName + "!");
-        window.location.href = "register.html";
+        localStorage.setItem("ubs_current_user", JSON.stringify(user));
+        window.location.href = "home.html";
       });
     </script>
   </body>
