@@ -288,6 +288,35 @@
         margin-top: 8px;
       }
 
+      /* ✅ Highlight selected item from sales page */
+      .selected-item-banner {
+        background-color: rgba(242, 101, 34, 0.08);
+        border: 1.5px solid var(--orange);
+        border-radius: 10px;
+        padding: 14px 18px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .selected-item-banner .item-icon {
+        font-size: 24px;
+      }
+
+      .selected-item-banner .item-info strong {
+        display: block;
+        color: var(--navy);
+        font-size: 16px;
+        margin-bottom: 2px;
+      }
+
+      .selected-item-banner .item-info span {
+        color: var(--orange);
+        font-weight: bold;
+        font-size: 18px;
+      }
+
       form {
         display: grid;
         gap: 16px;
@@ -398,13 +427,13 @@
   </head>
   <body>
     <header class="topbar">
-      <div class="logo">
-        <div class="logo-icon">💳</div>
+      <a href="home.html" class="logo">
+        <div class="logo-icon">🛒</div>
         <div>
           <h1>University Bazaar</h1>
           <p>UTA Student Marketplace</p>
         </div>
-      </div>
+      </a>
 
       <div class="topbar-right">
         <div class="welcome-msg">
@@ -461,15 +490,18 @@
           <div class="section-header">
             <div>
               <h3>Order Summary</h3>
-              <p>Example purchase details passed from the sales page.</p>
+              <p>Item selected from the Sales page.</p>
             </div>
             <span class="badge">Checkout</span>
           </div>
 
-          <div class="summary-card">
-            <h4>Selected Item</h4>
-            <p id="itemName">Calculus Textbook</p>
-            <div class="amount" id="itemPrice">$35.00</div>
+          <!-- ✅ Selected item banner -->
+          <div class="selected-item-banner" id="selectedItemBanner">
+            <div class="item-icon">🛒</div>
+            <div class="item-info">
+              <strong id="itemName">No item selected</strong>
+              <span id="itemPrice">—</span>
+            </div>
           </div>
 
           <div class="summary-card">
@@ -589,8 +621,8 @@
             <div class="step-card">
               <h4>1. Buyer selects an item</h4>
               <p>
-                The user chooses an item from the Sales page and proceeds to
-                checkout.
+                The user clicks Buy Item on the Sales page and is redirected
+                here with the item pre-loaded.
               </p>
             </div>
             <div class="step-card">
@@ -639,6 +671,16 @@
         window.location.href = "login.html";
       }
 
+      // ✅ Load selected item from sales page
+      var selectedItem = JSON.parse(localStorage.getItem("ubs_selected_item"));
+      if (selectedItem) {
+        document.getElementById("itemName").textContent = selectedItem.name;
+        document.getElementById("itemPrice").textContent = selectedItem.price;
+      } else {
+        document.getElementById("itemName").textContent = "No item selected";
+        document.getElementById("itemPrice").textContent = "—";
+      }
+
       // Card preview
       const cardNumberInput = document.getElementById("cardNumber");
       const cardNameInput = document.getElementById("cardName");
@@ -678,11 +720,17 @@
           return;
         }
 
+        const itemName = document.getElementById("itemName").textContent;
         validationMessage.textContent = "Payment processed successfully.";
         validationMessage.className = "validation-message success-message";
 
         setTimeout(() => {
-          alert("Payment successful. Your transaction has been completed.");
+          alert(
+            "Payment successful! Your purchase of " +
+              itemName +
+              " has been completed.",
+          );
+          localStorage.removeItem("ubs_selected_item");
         }, 200);
 
         paymentForm.reset();

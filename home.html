@@ -52,6 +52,12 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+      }
+
+      .logo:hover {
+        opacity: 0.85;
       }
 
       .logo-icon {
@@ -432,13 +438,14 @@
   </head>
   <body>
     <header class="topbar">
-      <div class="logo">
+      <!-- ✅ Logo now links to home.html -->
+      <a href="home.html" class="logo">
         <div class="logo-icon">🛒</div>
         <div>
           <h1>University Bazaar</h1>
           <p>UTA Student Marketplace</p>
         </div>
-      </div>
+      </a>
 
       <div class="topbar-right">
         <div class="welcome-msg">

@@ -379,13 +379,11 @@
         display: grid;
         gap: 16px;
       }
-
       .form-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 16px;
       }
-
       .form-group {
         display: grid;
         gap: 8px;
@@ -406,7 +404,6 @@
         resize: vertical;
         min-height: 110px;
       }
-
       input:focus,
       select:focus,
       textarea:focus {
@@ -496,13 +493,13 @@
   </head>
   <body>
     <header class="topbar">
-      <div class="logo">
+      <a href="home.html" class="logo">
         <div class="logo-icon">🛒</div>
         <div>
           <h1>University Bazaar</h1>
           <p>UTA Student Marketplace</p>
         </div>
-      </div>
+      </a>
 
       <div class="topbar-right">
         <div class="welcome-msg">
@@ -511,6 +508,9 @@
         <nav class="menu">
           <a href="home.html">Home</a>
           <a href="sales.html">Sales</a>
+          <a href="payments.html">Payments</a>
+          <a href="clubs.html">Clubs</a>
+          <a href="communication.html">Communication</a>
           <a href="#create-listing">Post Listing</a>
           <button class="filter-btn active" data-filter="all">All Items</button>
           <button class="filter-btn" data-filter="books">Books</button>
@@ -609,7 +609,7 @@
             <div class="card-actions">
               <button
                 class="mini-btn primary"
-                onclick="openTransaction('Calculus Textbook', '$35', 'Buy')"
+                onclick="buyItem('Calculus Textbook', '$35')"
               >
                 Buy Item
               </button>
@@ -710,7 +710,7 @@
             <div class="card-actions">
               <button
                 class="mini-btn primary"
-                onclick="openTransaction('Wireless Headphones', '$45', 'Buy')"
+                onclick="buyItem('Wireless Headphones', '$45')"
               >
                 Buy Item
               </button>
@@ -741,7 +741,7 @@
             <div class="card-actions">
               <button
                 class="mini-btn primary"
-                onclick="openTransaction('Biology Lab Manual', '$18', 'Buy')"
+                onclick="buyItem('Biology Lab Manual', '$18')"
               >
                 Buy Item
               </button>
@@ -772,7 +772,7 @@
             <div class="card-actions">
               <button
                 class="mini-btn primary"
-                onclick="openTransaction('Desk Lamp', '$20', 'Buy')"
+                onclick="buyItem('Desk Lamp', '$20')"
               >
                 Buy Item
               </button>
@@ -910,8 +910,8 @@
                 4. Payment Story Connects Next
               </h4>
               <p>
-                For purchases, this sales page can hand off to your Sprint 2
-                payments page once you build that next story.
+                For purchases, clicking Buy Item now takes the user directly to
+                the Payments page with the item pre-selected.
               </p>
             </div>
           </div>
@@ -962,6 +962,18 @@
       function logout() {
         localStorage.removeItem("ubs_current_user");
         window.location.href = "login.html";
+      }
+
+      // ✅ Buy Item — saves item and redirects to payments page
+      function buyItem(itemName, itemPrice) {
+        localStorage.setItem(
+          "ubs_selected_item",
+          JSON.stringify({
+            name: itemName,
+            price: itemPrice,
+          }),
+        );
+        window.location.href = "payments.html";
       }
 
       // Filter buttons
