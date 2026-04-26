@@ -258,55 +258,6 @@ document.getElementById("clubForm").addEventListener("submit", function(e) {
   }, 3000);
 });
 
-function renderRequests() {
-  const requestList = document.getElementById("requestList");
-  requestList.innerHTML = "";
-
-  let hasRequests = false;
-
-  clubs.forEach((club, clubIndex) => {
-    club.pending.forEach((memberName) => {
-      hasRequests = true;
-
-      requestList.innerHTML += `
-        <div class="request-row">
-          <div>
-            <strong>${memberName}</strong>
-            <p>Requested to join ${club.name}</p>
-          </div>
-          <div>
-            <button class="btn" onclick="approveRequest(${clubIndex}, '${memberName}')">Approve</button>
-            <button class="btn btn-secondary" onclick="denyRequest(${clubIndex}, '${memberName}')">Deny</button>
-          </div>
-        </div>
-      `;
-    });
-  });
-
-  if (!hasRequests) {
-    requestList.innerHTML = "<p>No pending membership requests at this time.</p>";
-  }
-}
-
-function approveRequest(clubIndex, memberName) {
-  clubs[clubIndex].pending = clubs[clubIndex].pending.filter(name => name !== memberName);
-
-  if (!clubs[clubIndex].members.includes(memberName)) {
-    clubs[clubIndex].members.push(memberName);
-  }
-
-  saveClubs();
-  renderClubs();
-  alert(memberName + " has been approved for " + clubs[clubIndex].name + ".");
-}
-
-function denyRequest(clubIndex, memberName) {
-  clubs[clubIndex].pending = clubs[clubIndex].pending.filter(name => name !== memberName);
-  saveClubs();
-  renderClubs();
-  alert(memberName + "'s request was denied.");
-}
-
 renderClubs();
 </script>
 
