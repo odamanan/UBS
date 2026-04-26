@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>UBS - Clubs</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+:root{
+  --navy:#003087;--orange:#f26522;--orange-dark:#d4541a;
+  --soft:#f7f9fc;--border:#d9e1ef;--text:#1f2937;
+  --muted:#666;--success:#0f9d58;
+}
+body{background:var(--soft);color:var(--text);}
+a{text-decoration:none;color:inherit;}
+
+.topbar{background:var(--navy);color:white;padding:18px 40px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-icon{background:var(--orange);padding:10px;border-radius:8px;font-size:20px;}
+.logo h1{font-size:22px;color:white;}
+.logo p{font-size:13px;color:rgba(255,255,255,.7);}
+.topbar-right{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.welcome-msg{font-size:14px;color:rgba(255,255,255,.9);}
+.welcome-msg span{font-weight:bold;color:var(--orange);}
+.menu{display:flex;gap:10px;flex-wrap:wrap;}
+.menu a{background:rgba(255,255,255,.12);color:white;border:1px solid rgba(255,255,255,.18);padding:10px 16px;border-radius:999px;font-size:14px;font-weight:bold;}
+.menu a:hover,.menu a.active{background:var(--orange);border-color:var(--orange);}
+.logout-btn{padding:10px 18px;border-radius:999px;background:var(--orange);color:white;font-weight:bold;border:none;cursor:pointer;}
+.logout-btn:hover{background:var(--orange-dark);}
+
+.page{max-width:1150px;margin:auto;padding:30px 40px;}
+.card{background:white;padding:24px;border-radius:12px;margin-bottom:22px;border:1px solid var(--border);box-shadow:0 10px 30px rgba(0,48,135,.08);}
+h2,h3,h4{color:var(--navy);}
+p{color:var(--muted);line-height:1.6;margin-top:8px;font-size:14px;}
+
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;}
+.hero h2{font-size:34px;margin-bottom:10px;}
+.badge{display:inline-block;background:rgba(242,101,34,.12);color:var(--orange);padding:8px 12px;border-radius:999px;font-size:12px;font-weight:bold;margin-bottom:12px;}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.club{border:1px solid var(--border);padding:18px;border-radius:10px;background:white;}
+.club-meta{font-size:13px;color:var(--muted);margin:8px 0;}
+.status{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:bold;margin-top:10px;}
+.open{background:#eef3fb;color:var(--navy);}
+.pending{background:#fff4e8;color:var(--orange);}
+.member{background:#edf8f2;color:var(--success);}
+
+form{display:grid;gap:14px;}
+input,textarea,select{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;}
+textarea{min-height:100px;resize:vertical;}
+
+.btn{background:var(--orange);color:white;padding:10px 14px;border:none;border-radius:6px;cursor:pointer;font-weight:bold;margin-top:10px;}
+.btn:hover{background:var(--orange-dark);}
+.btn-secondary{background:white;color:var(--navy);border:1px solid var(--border);}
+.btn-secondary:hover{border-color:var(--navy);background:white;}
+
+.notice{display:none;margin-top:12px;padding:12px;border-radius:8px;background:#edf8f2;color:var(--success);font-weight:bold;font-size:14px;}
+.manage-list{display:grid;gap:12px;}
+.request-row{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--border);padding:12px;border-radius:8px;}
+
+@media(max-width:850px){
+  .hero,.grid{grid-template-columns:1fr;}
+  .page,.topbar{padding-left:20px;padding-right:20px;}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <a href="home.html" class="logo">
+    <div class="logo-icon">🛒</div>
+    <div>
+      <h1>University Bazaar</h1>
+      <p>UTA Student Marketplace</p>
+    </div>
+  </a>
+
+  <div class="topbar-right">
+    <div class="welcome-msg">
+      Welcome, <span id="userName">Student</span>!
+    </div>
+
+    <nav class="menu">
+      <a href="home.html">Home</a>
+      <a href="sales.html">Sales</a>
+      <a href="payments.html">Payments</a>
+      <a href="clubs.html" class="active">Clubs</a>
+      <a href="communication.html">Communication</a>
+    </nav>
+
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+</header>
+
+<div class="page">
+
+  <section class="hero">
+    <div class="card">
+      <span class="badge">Campus Organizations</span>
+      <h2>Clubs & Organizations</h2>
+      <p>
+        Registered UBS members can create clubs, browse available organizations,
+        request to join, and manage club membership.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Club Actions</h3>
+      <p>Create a new club, request to join existing clubs, and approve or deny pending membership requests.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3>Create a Club</h3>
+    <p>Provide a club name and description to create a new campus organization.</p>
+
+    <form id="clubForm">
+      <input type="text" id="clubName" placeholder="Club Name" required>
+      <textarea id="clubDesc" placeholder="Club Description" required></textarea>
+      <button class="btn" type="submit">Create Club</button>
+    </form>
+
+    <div class="notice" id="clubNotice">Club created successfully.</div>
+  </section>
+
+  <section class="card">
+    <h3>Available Clubs</h3>
+    <p>Browse clubs and request to join organizations that match your interests.</p>
+    <div class="grid" id="clubList"></div>
+  </section>
+
+  <section class="card">
+    <h3>Coordinator Membership Management</h3>
+    <p>Club creators or coordinators can review pending member requests below.</p>
+    <div class="manage-list" id="requestList"></div>
+  </section>
+
+</div>
+
+<script>
+var currentUser = JSON.parse(localStorage.getItem("ubs_current_user"));
+
+if (!currentUser) {
+  window.location.href = "login.html";
+} else {
+  document.getElementById("userName").textContent = currentUser.firstName;
+}
+
+function logout() {
+  localStorage.removeItem("ubs_current_user");
+  window.location.href = "login.html";
+}
+
+let clubs = JSON.parse(localStorage.getItem("ubs_clubs")) || [
+  {
+    name: "Chess Club",
+    description: "For students interested in competitive and casual chess.",
+    creator: "System",
+    members: [],
+    pending: []
+  },
+  {
+    name: "Math Club",
+    description: "Work together on problem-solving, tutoring, and competitions.",
+    creator: "System",
+    members: [],
+    pending: []
+  },
+  {
+    name: "European Students Club",
+    description: "A community for European students and students interested in European culture.",
+    creator: "System",
+    members: [],
+    pending: []
+  }
+];
+
+function saveClubs() {
+  localStorage.setItem("ubs_clubs", JSON.stringify(clubs));
+}
+
+function renderClubs() {
+  const clubList = document.getElementById("clubList");
+  clubList.innerHTML = "";
+
+  clubs.forEach((club, index) => {
+    const userName = currentUser.firstName;
+    const isMember = club.members.includes(userName);
+    const isPending = club.pending.includes(userName);
+
+    let statusText = "Open to Join";
+    let statusClass = "open";
+    let buttonText = "Request to Join";
+    let buttonDisabled = "";
+
+    if (isMember) {
+      statusText = "Member";
+      statusClass = "member";
+      buttonText = "Already Joined";
+      buttonDisabled = "disabled";
+    } else if (isPending) {
+      statusText = "Pending Approval";
+      statusClass = "pending";
+      buttonText = "Request Sent";
+      buttonDisabled = "disabled";
+    }
+
+    clubList.innerHTML += `
+      <div class="club">
+        <h4>${club.name}</h4>
+        <p>${club.description}</p>
+        <div class="club-meta">Coordinator: ${club.creator}</div>
+        <div class="club-meta">Members: ${club.members.length}</div>
+        <span class="status ${statusClass}">${statusText}</span><br>
+        <button class="btn" onclick="requestJoin(${index})" ${buttonDisabled}>${buttonText}</button>
+      </div>
+    `;
+  });
+
+  renderRequests();
+}
+
+function requestJoin(index) {
+  const userName = currentUser.firstName;
+
+  if (!clubs[index].pending.includes(userName) && !clubs[index].members.includes(userName)) {
+    clubs[index].pending.push(userName);
+    saveClubs();
+    renderClubs();
+    alert("Your request to join " + clubs[index].name + " has been sent.");
+  }
+}
+
+document.getElementById("clubForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("clubName").value.trim();
+  const desc = document.getElementById("clubDesc").value.trim();
+
+  clubs.push({
+    name: name,
+    description: desc,
+    creator: currentUser.firstName,
+    members: [currentUser.firstName],
+    pending: []
+  });
+
+  saveClubs();
+  renderClubs();
+
+  document.getElementById("clubNotice").style.display = "block";
+  this.reset();
+
+  setTimeout(() => {
+    document.getElementById("clubNotice").style.display = "none";
+  }, 3000);
+});
+
+function renderRequests() {
+  const requestList = document.getElementById("requestList");
+  requestList.innerHTML = "";
+
+  let hasRequests = false;
+
+  clubs.forEach((club, clubIndex) => {
+    club.pending.forEach((memberName) => {
+      hasRequests = true;
+
+      requestList.innerHTML += `
+        <div class="request-row">
+          <div>
+            <strong>${memberName}</strong>
+            <p>Requested to join ${club.name}</p>
+          </div>
+          <div>
+            <button class="btn" onclick="approveRequest(${clubIndex}, '${memberName}')">Approve</button>
+            <button class="btn btn-secondary" onclick="denyRequest(${clubIndex}, '${memberName}')">Deny</button>
+          </div>
+        </div>
+      `;
+    });
+  });
+
+  if (!hasRequests) {
+    requestList.innerHTML = "<p>No pending membership requests at this time.</p>";
+  }
+}
+
+function approveRequest(clubIndex, memberName) {
+  clubs[clubIndex].pending = clubs[clubIndex].pending.filter(name => name !== memberName);
+
+  if (!clubs[clubIndex].members.includes(memberName)) {
+    clubs[clubIndex].members.push(memberName);
+  }
+
+  saveClubs();
+  renderClubs();
+  alert(memberName + " has been approved for " + clubs[clubIndex].name + ".");
+}
+
+function denyRequest(clubIndex, memberName) {
+  clubs[clubIndex].pending = clubs[clubIndex].pending.filter(name => name !== memberName);
+  saveClubs();
+  renderClubs();
+  alert(memberName + "'s request was denied.");
+}
+
+renderClubs();
+</script>
+
+</body>
+</html>
