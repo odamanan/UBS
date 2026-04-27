@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UBS - Communication</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      :root {
+        --navy: #003087;
+        --orange: #f26522;
+        --orange-dark: #d4541a;
+        --soft-white: #f7f9fc;
+        --border: #d9e1ef;
+        --text: #1f2937;
+        --muted: #666666;
+        --shadow: 0 10px 30px rgba(0, 48, 135, 0.08);
+        --radius: 12px;
+      }
+
+      body {
+        background: var(--soft-white);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .topbar {
+        background: var(--navy);
+        color: white;
+        padding: 18px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        box-shadow: var(--shadow);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-icon {
+        background: var(--orange);
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .logo h3 {
+        color: white;
+        font-size: 22px;
+      }
+
+      .logo small {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 13px;
+      }
+
+      .menu {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .menu a {
+        color: white;
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        font-weight: bold;
+        font-size: 14px;
+        transition: 0.2s ease;
+      }
+
+      .menu a:hover,
+      .menu a.active {
+        background: var(--orange);
+        border-color: var(--orange);
+      }
+
+      .logout-btn {
+        background: var(--orange);
+        border: none;
+        padding: 10px 18px;
+        border-radius: 999px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .logout-btn:hover {
+        background: var(--orange-dark);
+      }
+
+      .page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 30px 40px 40px;
+      }
+
+      .hero,
+      .card {
+        background: white;
+        padding: 28px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        margin-bottom: 24px;
+      }
+
+      .hero-tag,
+      .badge {
+        display: inline-block;
+        background: rgba(242, 101, 34, 0.12);
+        color: var(--orange);
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 14px;
+      }
+
+      h2 {
+        color: var(--navy);
+        margin-bottom: 10px;
+      }
+
+      p {
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+
+      label {
+        margin-top: 12px;
+        display: block;
+        font-weight: bold;
+        color: var(--navy);
+        font-size: 14px;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 12px 14px;
+        margin-top: 6px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        font-size: 14px;
+        outline: none;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        border-color: var(--navy);
+      }
+
+      textarea {
+        min-height: 130px;
+        resize: vertical;
+      }
+
+      .btn {
+        margin-top: 18px;
+        padding: 12px 18px;
+        border: none;
+        border-radius: 6px;
+        background: var(--orange);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background: var(--orange-dark);
+      }
+
+      .message-box {
+        border-left: 4px solid var(--navy);
+        padding: 14px;
+        margin-top: 12px;
+        background: #f4f6fb;
+        border-radius: 8px;
+      }
+
+      .message-box b {
+        color: var(--navy);
+      }
+
+      .success {
+        color: green;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+
+      footer {
+        text-align: center;
+        color: #777;
+        font-size: 12px;
+        padding-top: 8px;
+      }
+
+      @media (max-width: 850px) {
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+
+        .page,
+        .topbar {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="topbar">
+      <a href="home.html" class="logo">
+        <div class="logo-icon">🛒</div>
+        <div>
+          <h3>University Bazaar</h3>
+          <small>UTA Marketplace</small>
+        </div>
+      </a>
+
+      <nav class="menu">
+        <a href="home.html">Home</a>
+        <a href="sales.html">Sales</a>
+        <a href="payments.html">Payments</a>
+        <a href="clubs.html">Clubs</a>
+        <a href="communication.html" class="active">Communication</a>
+      </nav>
+
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <h2>Communication Center</h2>
+        <p>
+          Registered members can send messages or announcements to a single
+          member, a subgroup, or all members in the University Bazaar System.
+          This prototype stores messages locally for demonstration.
+        </p>
+      </section>
+
+      <section class="two-col">
+        <div class="card">
+          <h2>Send Message</h2>
+          <p>
+            Send information to a member email, external email, group, or all
+            users.
+          </p>
+
+          <form id="messageForm">
+            <label for="type">Send To</label>
+            <select id="type" required>
+              <option value="">Select recipient type</option>
+              <option>Single Member</option>
+              <option>Subgroup</option>
+              <option>All Members</option>
+              <option>External Email</option>
+            </select>
+
+            <label for="recipient">Recipient</label>
+            <input
+              type="text"
+              id="recipient"
+              placeholder="john@mavs.uta.edu, john@gmail.com, Chess Club, or All Members"
+              required
+            />
+
+            <label for="subject">Subject</label>
+            <input
+              type="text"
+              id="subject"
+              placeholder="Example: Free Pizza at 12 in ERB 500"
+              required
+            />
+
+            <label for="body">Message</label>
+            <textarea
+              id="body"
+              placeholder="Write your announcement or message here..."
+              required
+            ></textarea>
+
+            <button class="btn" type="submit">Send Message</button>
+            <div id="status" class="success"></div>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Sent Messages</h2>
+          <p>Messages sent in this browser will appear below.</p>
+          <div id="messages"></div>
+        </div>
+      </section>
+
+      <footer>
+        © 2026 University Bazaar System — University of Texas at Arlington
+      </footer>
+    </main>
+
+    <script>
+      var user = JSON.parse(localStorage.getItem("ubs_current_user"));
+
+      if (!user) {
+        window.location.href = "login.html";
+      }
+
+      function logout() {
+        localStorage.removeItem("ubs_current_user");
+        window.location.href = "login.html";
+      }
+
+      const form = document.getElementById("messageForm");
+      const messagesDiv = document.getElementById("messages");
+      const status = document.getElementById("status");
+
+      function loadMessages() {
+        const msgs = JSON.parse(localStorage.getItem("ubs_messages")) || [];
+        messagesDiv.innerHTML = "";
+
+        if (msgs.length === 0) {
+          messagesDiv.innerHTML =
+            "<p>No messages sent yet. Use the form to send your first message.</p>";
+          return;
+        }
+
+        msgs
+          .slice()
+          .reverse()
+          .forEach((m) => {
+            const div = document.createElement("div");
+            div.className = "message-box";
+            div.innerHTML = `
+              <b>${m.subject}</b><br>
+              <strong>From:</strong> ${m.sender}<br>
+              <strong>To:</strong> ${m.type} (${m.recipient})<br>
+              <p>${m.body}</p>
+              <small>${m.date}</small>
+            `;
+            messagesDiv.appendChild(div);
+          });
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const msg = {
+          sender: user ? user.email : "Unknown User",
+          type: document.getElementById("type").value,
+          recipient: document.getElementById("recipient").value.trim(),
+          subject: document.getElementById("subject").value.trim(),
+          body: document.getElementById("body").value.trim(),
+          date: new Date().toLocaleString(),
+        };
+
+        const msgs = JSON.parse(localStorage.getItem("ubs_messages")) || [];
+        msgs.push(msg);
+        localStorage.setItem("ubs_messages", JSON.stringify(msgs));
+
+        status.textContent = "Message sent successfully!";
+        form.reset();
+        loadMessages();
+
+        setTimeout(() => {
+          status.textContent = "";
+        }, 3000);
+      });
+
+      loadMessages();
+    </script>
+  </body>
+</html>
